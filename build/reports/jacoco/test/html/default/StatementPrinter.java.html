@@ -8,43 +8,55 @@ import java.util.Locale;
 <span class="fc" id="L8">    double totalAmount = 0.0;</span>
 <span class="fc" id="L9">    int volumeCredits = 0;</span>
 <span class="fc" id="L10">    StringBuilder result = new StringBuilder();</span>
-<span class="fc" id="L11">    result.append(String.format(&quot;Statement for %s\n&quot;, invoice.customer));</span>
+<span class="fc" id="L11">    Customer customer = invoice.getCustomer(); // Get the customer from the invoice</span>
 
-<span class="fc" id="L13">    NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.US);</span>
+<span class="fc" id="L13">    result.append(String.format(&quot;Statement for %s\n&quot;, customer.getName())); // Use customer's name</span>
 
-<span class="fc bfc" id="L15" title="All 2 branches covered.">    for (Performance perf : invoice.performances) {</span>
-<span class="fc" id="L16">      Play play = plays.get(perf.playID);</span>
-<span class="fc" id="L17">      double thisAmount = 0.0;</span>
+<span class="fc" id="L15">    NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.US);</span>
 
-<span class="fc bfc" id="L19" title="All 3 branches covered.">      switch (play.type) {</span>
+<span class="fc bfc" id="L17" title="All 2 branches covered.">    for (Performance perf : invoice.getPerformances()) { // Use the invoice's getPerformances method</span>
+<span class="fc" id="L18">      Play play = plays.get(perf.getPlayID()); // Use the invoice's getPlayID method</span>
+<span class="fc" id="L19">      double thisAmount = 0.0;</span>
+
+<span class="fc bfc" id="L21" title="All 3 branches covered.">      switch (play.getType()) { // Use the play's getType method</span>
         case TRAGEDY:
-<span class="fc" id="L21">          thisAmount = 400.00; // Utilisation de valeurs en dollars avec des centimes</span>
-<span class="fc bfc" id="L22" title="All 2 branches covered.">          if (perf.audience &gt; 30) {</span>
-<span class="fc" id="L23">            thisAmount += 10.00 * (perf.audience - 30);</span>
+<span class="fc" id="L23">          thisAmount = 400.00;</span>
+<span class="fc bfc" id="L24" title="All 2 branches covered.">          if (perf.getAudience() &gt; 30) {</span>
+<span class="fc" id="L25">            thisAmount += 10.00 * (perf.getAudience() - 30);</span>
           }
           break;
         case COMEDY:
-<span class="fc" id="L27">          thisAmount = 300.00; // Utilisation de valeurs en dollars avec des centimes</span>
-<span class="fc bfc" id="L28" title="All 2 branches covered.">          if (perf.audience &gt; 20) {</span>
-<span class="fc" id="L29">            thisAmount += 100.00 + 5.00 * (perf.audience - 20);</span>
+<span class="fc" id="L29">          thisAmount = 300.00;</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">          if (perf.getAudience() &gt; 20) {</span>
+<span class="fc" id="L31">            thisAmount += 100.00 + 5.00 * (perf.getAudience() - 20);</span>
           }
-<span class="fc" id="L31">          thisAmount += 3.00 * perf.audience;</span>
-<span class="fc" id="L32">          break;</span>
+<span class="fc" id="L33">          thisAmount += 3.00 * perf.getAudience();</span>
+<span class="fc" id="L34">          break;</span>
         default:
-<span class="fc" id="L34">          throw new Error(&quot;unknown type: &quot; + play.type);</span>
+<span class="fc" id="L36">          throw new Error(&quot;unknown type: &quot; + play.getType());</span>
       }
 
-<span class="fc" id="L37">      volumeCredits += Math.max(perf.audience - 30, 0);</span>
-<span class="fc bfc" id="L38" title="All 2 branches covered.">      if ( PlayType.COMEDY.equals(play.type)) {</span>
-<span class="fc" id="L39">        volumeCredits += Math.floor(perf.audience / 5);</span>
+<span class="fc" id="L39">      volumeCredits += Math.max(perf.getAudience() - 30, 0);</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">      if (PlayType.COMEDY.equals(play.getType())) {</span>
+<span class="fc" id="L41">        volumeCredits += Math.floor(perf.getAudience() / 5);</span>
       }
 
-<span class="fc" id="L42">      result.append(String.format(&quot;  %s: %s (%s seats)\n&quot;, play.name, currencyFormatter.format(thisAmount), perf.audience));</span>
-<span class="fc" id="L43">      totalAmount += thisAmount;</span>
-<span class="fc" id="L44">    }</span>
-<span class="fc" id="L45">    result.append(String.format(&quot;Amount owed is %s\n&quot;, currencyFormatter.format(totalAmount)));</span>
-<span class="fc" id="L46">    result.append(String.format(&quot;You earned %s credits\n&quot;, volumeCredits));</span>
-<span class="fc" id="L47">    return result.toString();</span>
+<span class="fc" id="L44">      result.append(String.format(&quot;  %s: %s (%s seats)\n&quot;, play.getName(), currencyFormatter.format(thisAmount), perf.getAudience()));</span>
+<span class="fc" id="L45">      totalAmount += thisAmount;</span>
+<span class="fc" id="L46">    }</span>
+
+<span class="fc" id="L48">    int totalLoyaltyPoints = customer.getLoyaltyPoints(); // Get customer's loyalty points</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">    if (totalLoyaltyPoints &gt; 150) {</span>
+<span class="fc" id="L50">      totalAmount -= 15.0; // Apply a discount of 15â‚¬</span>
+<span class="fc" id="L51">      customer.deductLoyaltyPoints(150); // Deduct 150 points</span>
+    }
+<span class="fc" id="L53">    totalLoyaltyPoints = customer.getLoyaltyPoints();</span>
+
+<span class="fc" id="L55">    result.append(String.format(&quot;Amount owed is %s\n&quot;, currencyFormatter.format(totalAmount)));</span>
+<span class="fc" id="L56">    result.append(String.format(&quot;You earned %s credits\n&quot;, volumeCredits));</span>
+<span class="fc" id="L57">    result.append(String.format(&quot;Total loyalty points: %s\n&quot;, totalLoyaltyPoints)); // Include loyalty points</span>
+
+<span class="fc" id="L59">    return result.toString();</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

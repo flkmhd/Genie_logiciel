@@ -12,4 +12,12 @@ public class Play {
   public static Play createPlay(String name, PlayType type) {
     return new Play(name, type);
   }
+
+  public PlayType getType() {
+    return type;
+  }
+
+  public Object getName() {
+    return name;
+  }
 }

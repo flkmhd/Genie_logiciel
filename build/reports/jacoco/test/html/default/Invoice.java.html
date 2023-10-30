@@ -2,12 +2,19 @@
 import java.util.List;
 
 public class Invoice {
-  public String customer;
+  public Customer customer;
   public List&lt;Performance&gt; performances;
 
-<span class="fc" id="L8">  public Invoice(String customer, List&lt;Performance&gt; performances) {</span>
+<span class="fc" id="L8">  public Invoice(Customer customer, List&lt;Performance&gt; performances) {</span>
 <span class="fc" id="L9">    this.customer = customer;</span>
 <span class="fc" id="L10">    this.performances = performances;</span>
 <span class="fc" id="L11">  }</span>
+  public Customer getCustomer() {
+<span class="fc" id="L13">    return customer;</span>
+  }
+
+  public List&lt;Performance&gt; getPerformances() {
+<span class="fc" id="L17">    return performances;</span>
+  }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

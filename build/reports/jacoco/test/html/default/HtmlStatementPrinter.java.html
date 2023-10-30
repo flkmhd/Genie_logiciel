@@ -8,80 +8,95 @@ import java.util.Locale;
 <span class="fc" id="L8">        double totalAmount = 0.0;</span>
 <span class="fc" id="L9">        int volumeCredits = 0;</span>
 <span class="fc" id="L10">        StringBuilder result = new StringBuilder();</span>
+<span class="fc" id="L11">        Customer customer = invoice.getCustomer();</span>
 
-<span class="fc" id="L12">        result.append(&quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;Invoice&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&quot;);</span>
-<span class="fc" id="L13">        result.append(&quot;&lt;style&gt;&quot;);</span>
-<span class="fc" id="L14">        result.append(&quot;table { border-collapse: collapse; width: 50%; }&quot;);</span>
-<span class="fc" id="L15">        result.append(&quot;th, td { border: 2px double black; padding: 8px; text-align: center; }&quot;);</span>
-<span class="fc" id="L16">        result.append(&quot;th { border: 2px double black; padding: 8px; text-align: center; background-color: #f2f2f2; }&quot;);</span>
-<span class="fc" id="L17">        result.append(&quot;b { font-weight: bold; }&quot;);</span>
-<span class="fc" id="L18">        result.append(&quot;.align-right { text-align: right; }&quot;);</span>
-<span class="fc" id="L19">        result.append(&quot;.price { text-align: center; }&quot;);</span>
-<span class="fc" id="L20">        result.append(&quot;&lt;/style&gt;&quot;);</span>
-<span class="fc" id="L21">        result.append(&quot;&lt;h1&gt;Invoice&lt;/h1&gt;&quot;);</span>
+<span class="fc" id="L13">        result.append(&quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;Invoice&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&quot;);</span>
+<span class="fc" id="L14">        result.append(&quot;&lt;style&gt;&quot;);</span>
+<span class="fc" id="L15">        result.append(&quot;table { border-collapse: collapse; width: 50%; }&quot;);</span>
+<span class="fc" id="L16">        result.append(&quot;th, td { border: 2px double black; padding: 8px; text-align: center; }&quot;);</span>
+<span class="fc" id="L17">        result.append(&quot;th { border: 2px double black; padding: 8px; text-align: center; background-color: #f2f2f2; }&quot;);</span>
+<span class="fc" id="L18">        result.append(&quot;b { font-weight: bold; }&quot;);</span>
+<span class="fc" id="L19">        result.append(&quot;.align-right { text-align: right; }&quot;);</span>
+<span class="fc" id="L20">        result.append(&quot;.price { text-align: center; }&quot;);</span>
+<span class="fc" id="L21">        result.append(&quot;&lt;/style&gt;&quot;);</span>
+<span class="fc" id="L22">        result.append(&quot;&lt;h1&gt;Invoice&lt;/h1&gt;&quot;);</span>
 
-<span class="fc" id="L23">        result.append(&quot;&lt;p&gt;&lt;b&gt;Client:&lt;/b&gt; &quot; + invoice.customer + &quot;&lt;/p&gt;&quot;);</span>
+<span class="fc" id="L24">        result.append(&quot;&lt;p&gt;&lt;b&gt;Client:&lt;/b&gt; &quot; + invoice.customer.getName() + &quot;&lt;/p&gt;&quot;);</span>
 
-<span class="fc" id="L25">        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.US);</span>
+<span class="fc" id="L26">        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.US);</span>
 
-<span class="fc" id="L27">        result.append(&quot;&lt;table&gt;&quot;);</span>
-<span class="fc" id="L28">        result.append(&quot;&lt;tr&gt;&quot;);</span>
-<span class="fc" id="L29">        result.append(&quot;&lt;th colspan='3'&gt;Piece&lt;/th&gt;&quot;);</span>
-<span class="fc" id="L30">        result.append(&quot;&lt;th colspan='3'&gt;Seats Sold&lt;/th&gt;&quot;);</span>
-<span class="fc" id="L31">        result.append(&quot;&lt;th colspan='3' class='price'&gt;Price&lt;/th&gt;&quot;);</span>
-<span class="fc" id="L32">        result.append(&quot;&lt;/tr&gt;&quot;);</span>
+<span class="fc" id="L28">        result.append(&quot;&lt;table&gt;&quot;);</span>
+<span class="fc" id="L29">        result.append(&quot;&lt;tr&gt;&quot;);</span>
+<span class="fc" id="L30">        result.append(&quot;&lt;th colspan='3'&gt;Piece&lt;/th&gt;&quot;);</span>
+<span class="fc" id="L31">        result.append(&quot;&lt;th colspan='3'&gt;Seats Sold&lt;/th&gt;&quot;);</span>
+<span class="fc" id="L32">        result.append(&quot;&lt;th colspan='3' class='price'&gt;Price&lt;/th&gt;&quot;);</span>
+<span class="fc" id="L33">        result.append(&quot;&lt;/tr&gt;&quot;);</span>
 
-<span class="fc bfc" id="L34" title="All 2 branches covered.">        for (Performance perf : invoice.performances) {</span>
-<span class="fc" id="L35">            Play play = plays.get(perf.playID);</span>
-<span class="fc" id="L36">            double thisAmount = 0.0;</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">        for (Performance perf : invoice.performances) {</span>
+<span class="fc" id="L36">            Play play = plays.get(perf.playID);</span>
+<span class="fc" id="L37">            double thisAmount = 0.0;</span>
 
-<span class="fc bfc" id="L38" title="All 3 branches covered.">            switch (play.type) {</span>
+<span class="fc bfc" id="L39" title="All 3 branches covered.">            switch (play.type) {</span>
                 case TRAGEDY:
-<span class="fc" id="L40">                    thisAmount = 400.00;</span>
-<span class="fc bfc" id="L41" title="All 2 branches covered.">                    if (perf.audience &gt; 30) {</span>
-<span class="fc" id="L42">                        thisAmount += 10.00 * (perf.audience - 30);</span>
+<span class="fc" id="L41">                    thisAmount = 400.00;</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">                    if (perf.audience &gt; 30) {</span>
+<span class="fc" id="L43">                        thisAmount += 10.00 * (perf.audience - 30);</span>
                     }
                     break;
                 case COMEDY:
-<span class="fc" id="L46">                    thisAmount = 300.00;</span>
-<span class="fc bfc" id="L47" title="All 2 branches covered.">                    if (perf.audience &gt; 20) {</span>
-<span class="fc" id="L48">                        thisAmount += 100.00 + 5.00 * (perf.audience - 20);</span>
+<span class="fc" id="L47">                    thisAmount = 300.00;</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">                    if (perf.audience &gt; 20) {</span>
+<span class="fc" id="L49">                        thisAmount += 100.00 + 5.00 * (perf.audience - 20);</span>
                     }
-<span class="fc" id="L50">                    thisAmount += 3.00 * perf.audience;</span>
-<span class="fc" id="L51">                    break;</span>
+<span class="fc" id="L51">                    thisAmount += 3.00 * perf.audience;</span>
+<span class="fc" id="L52">                    break;</span>
                 default:
-<span class="fc" id="L53">                    throw new Error(&quot;unknown type: &quot; + play.type);</span>
+<span class="fc" id="L54">                    throw new Error(&quot;unknown type: &quot; + play.type);</span>
             }
 
-<span class="fc" id="L56">            volumeCredits += Math.max(perf.audience - 30, 0);</span>
-<span class="fc bfc" id="L57" title="All 2 branches covered.">            if (PlayType.COMEDY.equals(play.type)) {</span>
-<span class="fc" id="L58">                volumeCredits += Math.floor(perf.audience / 5);</span>
+<span class="fc" id="L57">            volumeCredits += Math.max(perf.audience - 30, 0);</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">            if (PlayType.COMEDY.equals(play.type)) {</span>
+<span class="fc" id="L59">                volumeCredits += Math.floor(perf.audience / 5);</span>
             }
 
-<span class="fc" id="L61">            result.append(&quot;&lt;tr&gt;&quot;);</span>
-<span class="fc" id="L62">            result.append(&quot;&lt;td colspan='3'&gt;&quot; + play.name + &quot;&lt;/td&gt;&quot;);</span>
-<span class="fc" id="L63">            result.append(&quot;&lt;td colspan='3'&gt;&quot; + perf.audience + &quot;&lt;/td&gt;&quot;);</span>
-<span class="fc" id="L64">            result.append(&quot;&lt;td colspan='3' class='price'&gt;&quot; + currencyFormatter.format(thisAmount) + &quot;&lt;/td&gt;&quot;); // Appliquez la classe 'price' pour centrer les prix</span>
-<span class="fc" id="L65">            result.append(&quot;&lt;/tr&gt;&quot;);</span>
 
-<span class="fc" id="L67">            totalAmount += thisAmount;</span>
-<span class="fc" id="L68">        }</span>
 
-<span class="fc" id="L70">        result.append(&quot;&lt;tr&gt;&quot;);</span>
-<span class="fc" id="L71">        result.append(&quot;&lt;td colspan='6' class='align-right'&gt;&lt;b &gt;Totlowned&lt;/b&gt;&lt;/td&gt;&quot;);</span>
-<span class="fc" id="L72">        result.append(&quot;&lt;td colspan='3' &gt;&quot; + currencyFormatter.format(totalAmount) + &quot;&lt;/td&gt;&quot;);</span>
-<span class="fc" id="L73">        result.append(&quot;&lt;/tr&gt;&quot;);</span>
-<span class="fc" id="L74">        result.append(&quot;&lt;tr&gt;&quot;);</span>
-<span class="fc" id="L75">        result.append(&quot;&lt;td colspan='6' class='align-right'&gt;&lt;b &gt;Fidelity Points earned&lt;/b&gt;&lt;/td&gt;&quot;);</span>
-<span class="fc" id="L76">        result.append(&quot;&lt;td colspan='3' &gt;&quot; + volumeCredits + &quot;&lt;/td&gt;&quot;);</span>
-<span class="fc" id="L77">        result.append(&quot;&lt;/tr&gt;&quot;);</span>
+<span class="fc" id="L64">            result.append(&quot;&lt;tr&gt;&quot;);</span>
+<span class="fc" id="L65">            result.append(&quot;&lt;td colspan='3'&gt;&quot; + play.name + &quot;&lt;/td&gt;&quot;);</span>
+<span class="fc" id="L66">            result.append(&quot;&lt;td colspan='3'&gt;&quot; + perf.audience + &quot;&lt;/td&gt;&quot;);</span>
+<span class="fc" id="L67">            result.append(&quot;&lt;td colspan='3' class='price'&gt;&quot; + currencyFormatter.format(thisAmount) + &quot;&lt;/td&gt;&quot;); // Appliquez la classe 'price' pour centrer les prix</span>
+<span class="fc" id="L68">            result.append(&quot;&lt;/tr&gt;&quot;);</span>
+<span class="fc" id="L69">            totalAmount += thisAmount;</span>
+<span class="fc" id="L70">        }</span>
+<span class="fc" id="L71">        int totalLoyaltyPoints = customer.getLoyaltyPoints(); // Get customer's loyalty points</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        if (totalLoyaltyPoints &gt; 150) {</span>
+<span class="fc" id="L73">            double discount = 15.0; // Apply a discount of 15â‚¬</span>
+<span class="fc" id="L74">            totalAmount -= discount;</span>
+<span class="fc" id="L75">            customer.deductLoyaltyPoints(150); // Deduct 150 points</span>
+        }
+<span class="fc" id="L77">        totalLoyaltyPoints = customer.getLoyaltyPoints();</span>
 
-<span class="fc" id="L79">        result.append(&quot;&lt;/table&gt;&quot;);</span>
-<span class="fc" id="L80">        result.append(&quot;&lt;p&gt;Payment is required under 30 days. We can break your knees if you don't do so.&lt;/p&gt;&quot;);</span>
 
-<span class="fc" id="L82">        result.append(&quot;&lt;/body&gt;&lt;/html&gt;&quot;);</span>
+<span class="fc" id="L80">        result.append(&quot;&lt;tr&gt;&quot;);</span>
+<span class="fc" id="L81">        result.append(&quot;&lt;td colspan='6' class='align-right'&gt;&lt;b &gt;Totlowned&lt;/b&gt;&lt;/td&gt;&quot;);</span>
+<span class="fc" id="L82">        result.append(&quot;&lt;td colspan='3' &gt;&quot; + currencyFormatter.format(totalAmount) + &quot;&lt;/td&gt;&quot;);</span>
+<span class="fc" id="L83">        result.append(&quot;&lt;/tr&gt;&quot;);</span>
+<span class="fc" id="L84">        result.append(&quot;&lt;tr&gt;&quot;);</span>
+<span class="fc" id="L85">        result.append(&quot;&lt;td colspan='6' class='align-right'&gt;&lt;b &gt;Fidelity Points earned&lt;/b&gt;&lt;/td&gt;&quot;);</span>
+<span class="fc" id="L86">        result.append(&quot;&lt;td colspan='3' &gt;&quot; + volumeCredits + &quot;&lt;/td&gt;&quot;);</span>
+<span class="fc" id="L87">        result.append(&quot;&lt;/tr&gt;&quot;);</span>
 
-<span class="fc" id="L84">        return result.toString();</span>
+<span class="fc" id="L89">        result.append(&quot;&lt;tr&gt;&quot;);</span>
+<span class="fc" id="L90">        result.append(&quot;&lt;td colspan='6' class='align-right'&gt;&lt;b&gt;Total Loyalty Points&lt;/b&gt;&lt;/td&gt;&quot;);</span>
+<span class="fc" id="L91">        result.append(&quot;&lt;td colspan='3' class='price'&gt;&quot; + totalLoyaltyPoints + &quot;&lt;/td&gt;&quot;);</span>
+<span class="fc" id="L92">        result.append(&quot;&lt;/tr&gt;&quot;);</span>
+
+<span class="fc" id="L94">        result.append(&quot;&lt;/table&gt;&quot;);</span>
+<span class="fc" id="L95">        result.append(&quot;&lt;p&gt;Payment is required under 30 days. We can break your knees if you don't do so.&lt;/p&gt;&quot;);</span>
+
+<span class="fc" id="L97">        result.append(&quot;&lt;/body&gt;&lt;/html&gt;&quot;);</span>
+
+<span class="fc" id="L99">        return result.toString();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

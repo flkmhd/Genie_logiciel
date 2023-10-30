@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="StatementPrinterTests" tests="5" skipped="0" failures="0" errors="0" timestamp="2023-10-30T01:01:41" hostname="DESKTOP-G1D1P25" time="0.284">
+<testsuite name="StatementPrinterTests" tests="9" skipped="0" failures="0" errors="0" timestamp="2023-10-30T17:00:51" hostname="DESKTOP-G1D1P25" time="0.564">
   <properties/>
-  <testcase name="testAudience20ForComedy()" classname="StatementPrinterTests" time="0.052"/>
-  <testcase name="exampleStatement()" classname="StatementPrinterTests" time="0.171"/>
-  <testcase name="testAudience30ForUnknownType()" classname="StatementPrinterTests" time="0.004"/>
-  <testcase name="testAudience30ForTragedy()" classname="StatementPrinterTests" time="0.001"/>
-  <testcase name="exampleHtmlStatement()" classname="StatementPrinterTests" time="0.052"/>
+  <testcase name="exampleStatement()" classname="StatementPrinterTests" time="0.388"/>
+  <testcase name="testAudience30ForUnknownType()" classname="StatementPrinterTests" time="0.028"/>
+  <testcase name="testLoyaltyPointsDiscountAppliedhtml()" classname="StatementPrinterTests" time="0.014"/>
+  <testcase name="testLoyaltyPointsDiscountAppliedtext()" classname="StatementPrinterTests" time="0.003"/>
+  <testcase name="testAudience20ForComedyhtml()" classname="StatementPrinterTests" time="0.003"/>
+  <testcase name="testAudience20ForComedytext()" classname="StatementPrinterTests" time="0.002"/>
+  <testcase name="testAudience30ForTragedyHtml()" classname="StatementPrinterTests" time="0.001"/>
+  <testcase name="testAudience30ForTragedytext()" classname="StatementPrinterTests" time="0.002"/>
+  <testcase name="exampleHtmlStatement()" classname="StatementPrinterTests" time="0.115"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
